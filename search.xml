@@ -4,19 +4,6 @@
   
     
     <entry>
-      <title></title>
-      <link href="/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-      <url>/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
-      
-        <content type="html"><![CDATA[<ul><li>传输层：TCP和UDP<ul><li>什么是三次握手</li></ul></li></ul><h3 id="什么是三次握手-three-way-handshake-？"><a href="#什么是三次握手-three-way-handshake-？" class="headerlink" title="什么是三次握手 (three-way handshake)？"></a>什么是三次握手 (three-way handshake)？</h3><p>![[image-20221212004219997.png]]</p><ul><li>第一次握手：<strong>客户端行为</strong> ：客户端将 SYN 置 1，随机产生一个初始序列号 seq 发送给服务器，进入 SYN_SENT 状态；</li><li>第二次握手：<strong>服务器行为</strong> ：服务器收到客户端的 SYN &#x3D; 1 后，知道客户端请求建立连接，将自己的 SYN 置 1，ACK 置 1，产生一个acknowledge number &#x3D; sequence number + 1，并随机产生一个自己的初始序列号，发送给客户端，进入 SYN_RCVD 状态；</li><li>第三次握手：<strong>客户端的确认</strong> ：客户端检查 acknowledge number 是否为序列号 + 1，ACK 是否为 1，检查正确后将自己的 ACK 置 1，产生一个acknowledge number &#x3D; 服务器发送的序列号 + 1，发送给服务器，进 ESTABLISHED 状态；<strong>服务器的确认</strong> ：服务器检查 acknowledge number 是否为序列号 + 1 和 ACK 是否为1后进入 ESTABLISHED 状态，完成三次握手，连接建立。</li></ul><h4 id="TCP建立连接可以两次握手吗？为什么"><a href="#TCP建立连接可以两次握手吗？为什么" class="headerlink" title="TCP建立连接可以两次握手吗？为什么?"></a>TCP建立连接可以两次握手吗？为什么?</h4>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>lab2-System calls</title>
       <link href="/2024/08/01/lab2-System%20calls/"/>
       <url>/2024/08/01/lab2-System%20calls/</url>
