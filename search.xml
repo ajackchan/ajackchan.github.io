@@ -11,6 +11,22 @@
         <content type="html"><![CDATA[<span id="more"></span>]]></content>
       
       
+      <categories>
+          
+          <category> lab </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MIT 6.824 </tag>
+            
+            <tag> 分布式系统 </tag>
+            
+            <tag> go </tag>
+            
+        </tags>
       
     </entry>
     
@@ -24,6 +40,20 @@
         <content type="html"><![CDATA[<span id="more"></span>]]></content>
       
       
+      <categories>
+          
+          <category> 八股 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MySQL </tag>
+            
+            <tag> Redis </tag>
+            
+        </tags>
       
     </entry>
     
@@ -37,6 +67,26 @@
         <content type="html"><![CDATA[<span id="more"></span>]]></content>
       
       
+      <categories>
+          
+          <category> 八股 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 进程与线程 </tag>
+            
+            <tag> 同步与通信 </tag>
+            
+            <tag> 内存管理 </tag>
+            
+            <tag> 死锁 </tag>
+            
+            <tag> IO管理 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -58,6 +108,8 @@
       
       
         <tags>
+            
+            <tag> 计算机网络 </tag>
             
             <tag> TCP </tag>
             
@@ -119,6 +171,22 @@
         <content type="html"><![CDATA[<span id="more"></span>]]></content>
       
       
+      <categories>
+          
+          <category> lab </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MIT 6.S081 </tag>
+            
+            <tag> 操作系统 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
       
     </entry>
     
