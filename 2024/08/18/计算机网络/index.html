@@ -23,17 +23,17 @@
     var CONFIG = {"hostname":"ajackc.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="传输层：TCP和UDP 什么是三次握手 什么是四次挥手">
+  <meta name="description" content="传输层：TCP和UDP 什么是三次握手 什么是四次挥手 TCP如何实现流量控制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机网络">
 <meta property="og:url" content="http://ajackc.com/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="ByteIntoAI">
-<meta property="og:description" content="传输层：TCP和UDP 什么是三次握手 什么是四次挥手">
+<meta property="og:description" content="传输层：TCP和UDP 什么是三次握手 什么是四次挥手 TCP如何实现流量控制">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://ajackc.com/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/1.jpg">
 <meta property="og:image" content="http://ajackc.com/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/2.jpg">
 <meta property="article:published_time" content="2024-08-18T10:26:36.000Z">
-<meta property="article:modified_time" content="2024-08-22T08:44:59.612Z">
+<meta property="article:modified_time" content="2024-08-22T08:54:15.088Z">
 <meta property="article:author" content="Jack">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="TCP">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-22 16:44:59" itemprop="dateModified" datetime="2024-08-22T16:44:59+08:00">2024-08-22</time>
+                <time title="修改时间：2024-08-22 16:54:15" itemprop="dateModified" datetime="2024-08-22T16:54:15+08:00">2024-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,6 +281,7 @@
 <li>传输层：TCP和UDP<ul>
 <li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%9F">什么是三次握手</a></li>
 <li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%EF%BC%9F">什么是四次挥手</a></li>
+<li><a href="#TCP%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6">TCP如何实现流量控制</a></li>
 </ul>
 </li>
 </ul>
@@ -375,7 +376,7 @@
 </details>
 
 <hr>
-
+<h3 id="TCP如何实现流量控制？"><a href="#TCP如何实现流量控制？" class="headerlink" title="TCP如何实现流量控制？"></a>TCP如何实现流量控制？</h3>
     </div>
 
     
@@ -495,7 +496,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是三次握手？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E5%8F%AF%E4%BB%A5%E4%B8%A4%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">1.0.1.</span> <span class="nav-text">TCP建立连接可以两次握手吗？为什么?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E9%87%87%E7%94%A8%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.2.</span> <span class="nav-text">可以采用四次握手吗？为什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%AD%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84-ACK-%E6%9C%AA%E9%80%81%E8%BE%BE%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%BC%9A%E6%80%8E%E6%A0%B7%EF%BC%9F"><span class="nav-number">1.0.3.</span> <span class="nav-text">第三次握手中，如果客户端的 ACK 未送达服务器，会怎样？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E5%B7%B2%E7%BB%8F%E5%BB%BA%E7%AB%8B%E4%BA%86%E8%BF%9E%E6%8E%A5%EF%BC%8C%E4%BD%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%87%BA%E7%8E%B0%E4%BA%86%E6%95%85%E9%9A%9C%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">1.0.4.</span> <span class="nav-text">如果已经建立了连接，但客户端出现了故障怎么办？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%BA%8F%E5%88%97%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.5.</span> <span class="nav-text">初始序列号是什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什么是四次挥手？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E6%8A%8A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E9%80%81%E7%9A%84-ACK-%E5%92%8C-FIN-%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%8F%98%E6%88%90%E4%B8%89%E6%AC%A1%E6%8C%A5%E6%89%8B%EF%BC%88CLOSED-WAIT%E7%8A%B6%E6%80%81%E6%84%8F%E4%B9%89%EF%BC%89%EF%BC%9F"><span class="nav-number">2.0.1.</span> <span class="nav-text">为什么不能把服务器发送的 ACK 和 FIN 合起来，变成三次挥手（CLOSED_WAIT状态意义）？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%97%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84-ACK-%E6%B2%A1%E6%9C%89%E9%80%81%E8%BE%BE%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%8C%E4%BC%9A%E6%80%8E%E4%B9%88%E6%A0%B7%EF%BC%9F"><span class="nav-number">2.0.2.</span> <span class="nav-text">如果第二次挥手时服务器的 ACK 没有送达客户端，会怎么样？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-TIME-WAIT-%E7%8A%B6%E6%80%81%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9F"><span class="nav-number">2.0.3.</span> <span class="nav-text">客户端 TIME_WAIT 状态的意义？</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是三次握手？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E5%8F%AF%E4%BB%A5%E4%B8%A4%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">1.0.1.</span> <span class="nav-text">TCP建立连接可以两次握手吗？为什么?</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E9%87%87%E7%94%A8%E5%9B%9B%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%90%97%EF%BC%9F%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.2.</span> <span class="nav-text">可以采用四次握手吗？为什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E4%B8%AD%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84-ACK-%E6%9C%AA%E9%80%81%E8%BE%BE%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%BC%9A%E6%80%8E%E6%A0%B7%EF%BC%9F"><span class="nav-number">1.0.3.</span> <span class="nav-text">第三次握手中，如果客户端的 ACK 未送达服务器，会怎样？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E5%B7%B2%E7%BB%8F%E5%BB%BA%E7%AB%8B%E4%BA%86%E8%BF%9E%E6%8E%A5%EF%BC%8C%E4%BD%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%87%BA%E7%8E%B0%E4%BA%86%E6%95%85%E9%9A%9C%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-number">1.0.4.</span> <span class="nav-text">如果已经建立了连接，但客户端出现了故障怎么办？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%BA%8F%E5%88%97%E5%8F%B7%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.0.5.</span> <span class="nav-text">初始序列号是什么？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">什么是四次挥手？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E6%8A%8A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E9%80%81%E7%9A%84-ACK-%E5%92%8C-FIN-%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%8F%98%E6%88%90%E4%B8%89%E6%AC%A1%E6%8C%A5%E6%89%8B%EF%BC%88CLOSED-WAIT%E7%8A%B6%E6%80%81%E6%84%8F%E4%B9%89%EF%BC%89%EF%BC%9F"><span class="nav-number">2.0.1.</span> <span class="nav-text">为什么不能把服务器发送的 ACK 和 FIN 合起来，变成三次挥手（CLOSED_WAIT状态意义）？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%97%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84-ACK-%E6%B2%A1%E6%9C%89%E9%80%81%E8%BE%BE%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%8C%E4%BC%9A%E6%80%8E%E4%B9%88%E6%A0%B7%EF%BC%9F"><span class="nav-number">2.0.2.</span> <span class="nav-text">如果第二次挥手时服务器的 ACK 没有送达客户端，会怎么样？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-TIME-WAIT-%E7%8A%B6%E6%80%81%E7%9A%84%E6%84%8F%E4%B9%89%EF%BC%9F"><span class="nav-number">2.0.3.</span> <span class="nav-text">客户端 TIME_WAIT 状态的意义？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">TCP如何实现流量控制？</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
