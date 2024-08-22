@@ -30,10 +30,10 @@
 <meta property="og:site_name" content="ByteIntoAI">
 <meta property="og:description" content="传输层：TCP和UDP 什么是三次握手 什么是四次挥手">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/%22D:%5CBlog%5Cthemes%5Cnext%5Csource%5Cimages%5Cgraph%5C74163b7a9166e11e16b35090e2f32a1a.jpg%22">
-<meta property="og:image" content="http://example.com/%22D:%5CBlog%5Cthemes%5Cnext%5Csource%5Cimages%5C7468686c6f26333378737f75717b2a3278737f6f326d6d327f73713375717d7b79335d7b5d5d5f2a6931484a4c4f7e524f7777516c512f28585f492c5d4b4a6d6b6432766c797b.jpg%22">
+<meta property="og:image" content="http://example.com/graph/1.jpg">
+<meta property="og:image" content="http://example.com/graph/2.jpg">
 <meta property="article:published_time" content="2024-08-18T10:26:36.000Z">
-<meta property="article:modified_time" content="2024-08-21T09:45:25.726Z">
+<meta property="article:modified_time" content="2024-08-22T06:03:09.801Z">
 <meta property="article:author" content="Jack">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="TCP">
@@ -47,7 +47,7 @@
 <meta property="article:tag" content="路由协议">
 <meta property="article:tag" content="IP地址">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/%22D:%5CBlog%5Cthemes%5Cnext%5Csource%5Cimages%5Cgraph%5C74163b7a9166e11e16b35090e2f32a1a.jpg%22">
+<meta name="twitter:image" content="http://example.com/graph/1.jpg">
 
 <link rel="canonical" href="http://example.com/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
 
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-21 17:45:25" itemprop="dateModified" datetime="2024-08-21T17:45:25+08:00">2024-08-21</time>
+                <time title="修改时间：2024-08-22 14:03:09" itemprop="dateModified" datetime="2024-08-22T14:03:09+08:00">2024-08-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -286,7 +286,7 @@
 </ul>
 <span id="more"></span>
 
-<h3 id="什么是三次握手？"><a href="#什么是三次握手？" class="headerlink" title="什么是三次握手？"></a>什么是三次握手？</h3><p><img src="/%22D:%5CBlog%5Cthemes%5Cnext%5Csource%5Cimages%5Cgraph%5C74163b7a9166e11e16b35090e2f32a1a.jpg%22"></p>
+<h3 id="什么是三次握手？"><a href="#什么是三次握手？" class="headerlink" title="什么是三次握手？"></a>什么是三次握手？</h3><p><img src="/graph/1.jpg"></p>
 <ul>
 <li>第一次握手：<strong>客户端行为</strong> ：客户端将 SYN 置 1，随机产生一个初始序列号 seq 发送给服务器，进入 SYN_SENT 状态；</li>
 <li>第二次握手：<strong>服务器行为</strong> ：服务器收到客户端的 SYN &#x3D; 1 后，知道客户端请求建立连接，将自己的 SYN 置 1，ACK 置 1，产生一个acknowledge number &#x3D; sequence number + 1，并随机产生一个自己的初始序列号，发送给客户端，进入 SYN_RCVD 状态；</li>
@@ -313,7 +313,7 @@
 </ol>
 <h5 id="如果已经建立了连接，但客户端出现了故障怎么办？"><a href="#如果已经建立了连接，但客户端出现了故障怎么办？" class="headerlink" title="如果已经建立了连接，但客户端出现了故障怎么办？"></a>如果已经建立了连接，但客户端出现了故障怎么办？</h5><p>服务器每收到一次客户端的请求后都会重新复位一个计时器，时间通常设置为2小时，若2小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒发送一次。若一连发送10个探测报文段仍然没反应，服务器就认为客户端出现故障，接着关闭连接。</p>
 <h5 id="初始序列号是什么？"><a href="#初始序列号是什么？" class="headerlink" title="初始序列号是什么？"></a>初始序列号是什么？</h5><p>TCP 连接的一方 A，随机选择一个 32 位的序列号（Sequence Number）作为发送数据的初始序列号（Initial Sequence Number，ISN），比如为1000，以该序列号为原点，对要传送的数据进行编号：1001、1002…三次握手时，把这个序列号传送给另一方 B，以便在传输数据时，B 可以确认什么样的数据编号是合法的；同时在进行数据传输时，A 还可以确认 B 收到的每一个字节，如果 A 收到了 B 的确认编号（acknowledge number）是 2001，就说明编号 1001 - 2000 的数据已经被 B 成功接受。</p>
-<h3 id="什么是四次挥手？"><a href="#什么是四次挥手？" class="headerlink" title="什么是四次挥手？"></a>什么是四次挥手？</h3><p><img src="/%22D:%5CBlog%5Cthemes%5Cnext%5Csource%5Cimages%5C7468686c6f26333378737f75717b2a3278737f6f326d6d327f73713375717d7b79335d7b5d5d5f2a6931484a4c4f7e524f7777516c512f28585f492c5d4b4a6d6b6432766c797b.jpg%22"></p>
+<h3 id="什么是四次挥手？"><a href="#什么是四次挥手？" class="headerlink" title="什么是四次挥手？"></a>什么是四次挥手？</h3><p><img src="/graph/2.jpg"></p>
 
     </div>
 
