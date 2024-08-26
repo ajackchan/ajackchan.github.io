@@ -39,7 +39,7 @@
 <meta property="og:image" content="http://ajackc.com/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/8.jpg">
 <meta property="og:image" content="http://ajackc.com/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/9.jpg">
 <meta property="article:published_time" content="2024-08-18T10:26:36.000Z">
-<meta property="article:modified_time" content="2024-08-26T16:42:37.601Z">
+<meta property="article:modified_time" content="2024-08-26T16:43:41.504Z">
 <meta property="article:author" content="Jack">
 <meta property="article:tag" content="计算机网络">
 <meta property="article:tag" content="TCP">
@@ -241,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-27 00:42:37" itemprop="dateModified" datetime="2024-08-27T00:42:37+08:00">2024-08-27</time>
+                <time title="修改时间：2024-08-27 00:43:41" itemprop="dateModified" datetime="2024-08-27T00:43:41+08:00">2024-08-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -529,7 +529,7 @@
 <p>一种是原始的 302 跳转，服务器把所有的 HTTP 流量跳转到 HTTPS。但这样有一个漏洞，就是中间人可能在第一次访问站点的时候就劫持。解决方法是引入 HSTS 机制，用户浏览器在访问站点的时候强制使用 HTTPS。</p>
 </details>
 
-<h5 id="HTTPS-连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？"><a href="#HTTPS-连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？" class="headerlink" title="HTTPS 连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？"></a>HTTPS 连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？</h5><datails>
+<h5 id="HTTPS-连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？"><a href="#HTTPS-连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？" class="headerlink" title="HTTPS 连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？"></a>HTTPS 连接的时候，怎么确定收到的包是服务器发来的（中间人攻击）？</h5><details>
 <summary>展开</summary>
 
 <ol>
@@ -538,7 +538,7 @@
 <li>判断证书是否被篡改。需要与 CA 服务器进行校验；</li>
 <li>判断证书是否已吊销。通过 CRL（Certificate Revocation List 证书注销列表）和 OCSP（Online Certificate Status Protocol 在线证书状态协议）实现，其中 OCSP 可用于第 3 步中以减少与 cA 服务器的交互，提高验证效率。</li>
 </ol>
-</datails>
+</details>
     </div>
 
     
