@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://ajackc.top/2024/07/25/lab1-Utils/</loc>
+    <lastmod>2024-09-02</lastmod>
+  </url>
+  <url>
     <loc>http://ajackc.top/2024/08/18/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc>
     <lastmod>2024-09-01</lastmod>
   </url>
@@ -23,9 +27,5 @@
   <url>
     <loc>http://ajackc.top/2024/07/25/6-S081%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2024-08-19</lastmod>
-  </url>
-  <url>
-    <loc>http://ajackc.top/2024/07/25/lab1-Utils/</loc>
-    <lastmod>2024-08-18</lastmod>
   </url>
 </urlset> 
