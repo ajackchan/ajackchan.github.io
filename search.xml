@@ -77,7 +77,7 @@
       <link href="/2024/08/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
       <url>/2024/08/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</url>
       
-        <content type="html"><![CDATA[<span id="more"></span>]]></content>
+        <content type="html"><![CDATA[<ul><li>进程和线程<ul><li><a href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F">进程和线程有什么区别？</a></li><li><a href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F%EF%BC%9F">进程间通信有哪些方式？</a></li></ul></li></ul><span id="more"></span><hr><h3 id="进程和线程有什么区别？"><a href="#进程和线程有什么区别？" class="headerlink" title="进程和线程有什么区别？"></a>进程和线程有什么区别？</h3><ul><li>进程（Process）是系统进行资源分配和调度的基本单位，线程（Thread）是 CPU 调度和分配的基本单位；</li><li>线程依赖于进程而存在，一个进程至少有一个线程；</li><li>进程有自己的独立地址空间，线程共享所属进程的地址空间；</li><li>进程是拥有系统资源的一个独立单位，而线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源（如程序计数器，一组寄存器和栈），和其他线程共享本进程的相关资源如内存、I&#x2F;O、CPU 等；</li><li>在进程切换时，涉及到整个当前进程 CPU 环境的保存环境的设置以及新被调度运行的 CPU 环境的设置，而线程切换只需保存和设置少量的寄存器的内容，并不涉及存储器管理方面的操作，可见，进程切换的开销远大于线程切换的开销；</li><li>线程之间的通信更方便，同一进程下的线程共享全局变量等数据，而进程之间的通信需要以进程间通信（IPC）的方式进行；</li><li>多线程程序只要有一个线程崩溃，整个程序就崩溃了，但多进程程序中一个进程崩溃并不会对其它进程造成影响，因为进程有自己的独立地址空间，因此多进程更加健壮。</li></ul><h5 id="同一进程中的线程可以共享哪些数据？"><a href="#同一进程中的线程可以共享哪些数据？" class="headerlink" title="同一进程中的线程可以共享哪些数据？"></a>同一进程中的线程可以共享哪些数据？</h5><details><summary>展开</summary><ul><li>进程代码段</li><li>进程的共有数据（全局变量、静态变量…）</li><li>进程打开的文件描述符</li><li>进程的当前目录</li><li>信号处理器&#x2F;信号处理函数：对收到的信号的处理方式</li><li>进程的 ID 与进程组 ID</li></ul></details><h5 id="线程独占哪些资源？"><a href="#线程独占哪些资源？" class="headerlink" title="线程独占哪些资源？"></a>线程独占哪些资源？</h5><details><summary>展开</summary><ul><li>线程 ID</li><li>一组寄存器的值</li><li>线程自身的栈（堆是共享的）</li><li>错误返回码：线程可能会产生不同的错误返回码，一个线程的错误返回码不应该被其它线程修改；</li><li>信号掩码&#x2F;信号屏蔽字（Signal mask）：表示是否屏蔽&#x2F;阻塞相应的信号（SIGKILL，SIGSTOP 除外）</li></ul></details><h3 id="进程间通信有哪些方式？"><a href="#进程间通信有哪些方式？" class="headerlink" title="进程间通信有哪些方式？"></a>进程间通信有哪些方式？</h3>]]></content>
       
       
       <categories>
@@ -168,7 +168,7 @@
       <link href="/2024/07/25/6-S081%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/"/>
       <url>/2024/07/25/6-S081%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/</url>
       
-        <content type="html"><![CDATA[<span id="more"></span>]]></content>
+        <content type="html"><![CDATA[<span id="more"></span><h2 id="Lab-1：Unix-utilities"><a href="#Lab-1：Unix-utilities" class="headerlink" title="Lab 1：Unix utilities"></a>Lab 1：Unix utilities</h2><a href="/2024/09/05/lab1-Utils/" title="lab1-Utils">lab1-Utils</a>]]></content>
       
       
       <categories>
