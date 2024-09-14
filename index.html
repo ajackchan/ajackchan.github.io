@@ -213,7 +213,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-09-14 20:40:25 / 修改时间：21:30:58" itemprop="dateCreated datePublished" datetime="2024-09-14T20:40:25+08:00">2024-09-14</time>
+              <time title="创建时间：2024-09-14 20:40:25 / 修改时间：21:41:18" itemprop="dateCreated datePublished" datetime="2024-09-14T20:40:25+08:00">2024-09-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,13 +230,13 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>6.5k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -476,6 +476,37 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo \</span><br><span class="line">  &quot;deb [arch=&quot;$(dpkg --print-architecture)&quot; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \</span><br><span class="line">  &quot;$(. /etc/os-release &amp;&amp; echo &quot;$VERSION_CODENAME&quot;)&quot; stable&quot; | \</span><br><span class="line">  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null</span><br></pre></td></tr></table></figure>
 
 <p>接着安装 NVIDIA Docker，见自动安装部分</p>
+<hr>
+<h1 id="5-Windows安装Docker-Desktop"><a href="#5-Windows安装Docker-Desktop" class="headerlink" title="5. Windows安装Docker Desktop"></a>5. Windows安装Docker Desktop</h1><h2 id="Win10"><a href="#Win10" class="headerlink" title="Win10"></a>Win10</h2><p>下载：<a target="_blank" rel="noopener" href="https://docs.docker.com/desktop/install/windows-install/" title="Install Docker Desktop on Windows">https://docs.docker.com/desktop/install/windows-install/</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441965046" title="【全面详细】Windows10 Docker安装详细教程">https://zhuanlan.zhihu.com/p/441965046</a></p>
+<h2 id="Win11-家庭版"><a href="#Win11-家庭版" class="headerlink" title="Win11-家庭版"></a>Win11-家庭版</h2><ul>
+<li><p>下载：<a target="_blank" rel="noopener" href="https://docs.docker.com/desktop/install/windows-install/" title="Install Docker Desktop on Windows">https://docs.docker.com/desktop/install/windows-install/</a></p>
+</li>
+<li><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41644183/article/details/132305487?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_utm_term~default-9-132305487-blog-121278799.235%5Ev40%5Epc_relevant_anti_t3&spm=1001.2101.3001.4242.6&utm_relevant_index=12" title="Docker安装教程——以Windows11家庭中文版为例_win11家庭版安装docker-CSDN博客">https://blog.csdn.net/qq_41644183&#x2F;article&#x2F;details&#x2F;132305487?utm_medium&#x3D;distribute.pc_relevant.none-task-blog-2<del>default</del>baidujs_utm_term~default-9-132305487-blog-121278799.235^v40^pc_relevant_anti_t3&amp;spm&#x3D;1001.2101.3001.4242.6&amp;utm_relevant_index&#x3D;12</a></p>
+</li>
+</ul>
+<h3 id="安装问题"><a href="#安装问题" class="headerlink" title="安装问题"></a>安装问题</h3><ul>
+<li>Docker desktop第一次启动一直在转圈，显示starting the Docker Engine</li>
+</ul>
+<p><strong>可能原因</strong>：</p>
+<ol>
+<li>没有Hyper-V内置虚拟机，需要手动安装</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.baiyunxitong.com/bangzhu/6775.html" title="Win11家庭版找不到hyper-v|Win11家庭版没hyper-v虚拟机_白云一键重装系统">https://www.baiyunxitong.com/bangzhu/6775.html</a></p>
+<ol start="2">
+<li>还需要安装wsl（适用于linux的windows子系统）</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/667495068" title="Windows Docker Desktop安装教程及踩坑记录">https://zhuanlan.zhihu.com/p/667495068</a></p>
+<p><strong>以管理员的身份打开CMD或PowerShell运行以下命令</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh winsock reset</span><br></pre></td></tr></table></figure>
+
+<p><strong>更新 WSL</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wsl --update</span><br></pre></td></tr></table></figure>
+
+<p><strong>在控制面板-程序-启用或关闭windows功能勾选上以下三个内容</strong></p>
+<img src="/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3.jpg" class>
+
+<h2 id="Docker-Desktop-设置容器资源限制"><a href="#Docker-Desktop-设置容器资源限制" class="headerlink" title="Docker Desktop 设置容器资源限制"></a>Docker Desktop 设置容器资源限制</h2><p>有时候Docker容器里的大模型会出现爆内存等问题，可能是容器资源设置了限制。</p>
 <hr>
 
       
@@ -1345,19 +1376,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">41k</span>
+    <span title="站点总字数">42k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">37 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共19.1k字</span>
+  <span class="post-count">博客全站共19.4k字</span>
 </div>
 
 
