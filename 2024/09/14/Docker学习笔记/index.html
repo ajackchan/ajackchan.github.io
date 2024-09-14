@@ -33,8 +33,9 @@
 <meta property="og:image" content="http://ajackc.top/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.jpg">
 <meta property="og:image" content="http://ajackc.top/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2.jpg">
 <meta property="og:image" content="http://ajackc.top/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3.jpg">
+<meta property="og:image" content="http://ajackc.top/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/4.jpg">
 <meta property="article:published_time" content="2024-09-14T12:40:25.000Z">
-<meta property="article:modified_time" content="2024-09-14T13:41:18.992Z">
+<meta property="article:modified_time" content="2024-09-14T13:48:38.452Z">
 <meta property="article:author" content="Jack">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://ajackc.top/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.jpg">
@@ -219,7 +220,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-09-14 20:40:25 / 修改时间：21:41:18" itemprop="dateCreated datePublished" datetime="2024-09-14T20:40:25+08:00">2024-09-14</time>
+              <time title="创建时间：2024-09-14 20:40:25 / 修改时间：21:48:38" itemprop="dateCreated datePublished" datetime="2024-09-14T20:40:25+08:00">2024-09-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,7 +244,7 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
-              <span>7.3k</span>
+              <span>8.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -521,6 +522,41 @@
 
 <h2 id="Docker-Desktop-设置容器资源限制"><a href="#Docker-Desktop-设置容器资源限制" class="headerlink" title="Docker Desktop 设置容器资源限制"></a>Docker Desktop 设置容器资源限制</h2><p>有时候Docker容器里的大模型会出现爆内存等问题，可能是容器资源设置了限制。</p>
 <hr>
+<h1 id="6-制作Docker镜像"><a href="#6-制作Docker镜像" class="headerlink" title="6. 制作Docker镜像"></a>6. 制作Docker镜像</h1><h2 id="6-1-根据已有镜像使用docker-commit构建"><a href="#6-1-根据已有镜像使用docker-commit构建" class="headerlink" title="6.1 根据已有镜像使用docker commit构建"></a>6.1 根据已有镜像使用docker commit构建</h2><p><strong>这一方法的核心是docker commit</strong></p>
+<ul>
+<li>docker commit可以从容器创建一个新的镜像。</li>
+<li>通过对运行中的容器进行更改，然后使用 docker commit 命令，可以将容器的当前状态保存为新镜像。</li>
+<li>这种方法适用于快速的实验，但不推荐用于生产环境，因为：<ul>
+<li>docker commit不会明确记录构建过程，缺乏可重复性和透明性，会产生所谓的黑箱镜像。</li>
+<li>在容器中执行命令，会有很多文件被改动或添加。安装软件包、编译构建，那会有大量的无关内容被添加进来，将会导致镜像极为臃肿。</li>
+<li>简单的Python训练环境，可以用这个方法图方便，快速构建镜像。</li>
+</ul>
+</li>
+</ul>
+<p>思路：</p>
+<ol>
+<li>先拉取已有的镜像。</li>
+<li>使用镜像运行容器后，在容器内安装项目需要的Python依赖。</li>
+<li>将整个容器通过docker commit指令制作成镜像。</li>
+<li>导出镜像，在服务器上导入。</li>
+</ol>
+<h3 id="拉取已有镜像"><a href="#拉取已有镜像" class="headerlink" title="拉取已有镜像"></a>拉取已有镜像</h3><p>官方Pytorch镜像：<a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch#docker-image">https://github.com/pytorch/pytorch#docker-image</a></p>
+<p>也可以从docker hub里找到官方Pytorch镜像：<a target="_blank" rel="noopener" href="https://hub.docker.com/r/pytorch/pytorch/tags">https://hub.docker.com/r/pytorch/pytorch/tags</a></p>
+<img src="/2024/09/14/Docker%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/4.jpg" class>
+
+<p>同样的pytorch和cuda版本会有两种镜像，分别是 <code>devel</code> 和 <code>runtime</code> 镜像，区别如下：</p>
+<p><code>devel</code> 镜像：</p>
+<ul>
+<li>用途：<code>devel</code>（开发）镜像包含了编译和运行 CUDA 应用所需的所有依赖，包括编译器和开发工具。</li>
+<li>适用场景：如果您需要编译使用 CUDA 的自定义操作或者需要编译整个 PyTorch 源代码，那么 <code>devel</code> 镜像是必需的。</li>
+<li>大小：由于包含更多的开发工具和库，<code>devel</code> 镜像通常比 <code>runtime</code> 镜像大很多。</li>
+</ul>
+<p><code>runtime</code> 镜像：</p>
+<ul>
+<li>用途：<code>runtime</code>（运行时）镜像仅包含运行基于 CUDA 的应用程序所必需的库和工具。</li>
+<li>适用场景：如果您只需要运行已经编译好的 CUDA 应用程序，而不需要进行额外的编译或开发工作，<code>runtime</code> 镜像就足够了。</li>
+<li>大小：相较于 <code>devel</code> 镜像，<code>runtime</code> 镜像更小，因为它不包含额外的编译工具和库。</li>
+</ul>
 
     </div>
 
@@ -625,7 +661,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E4%BB%8B%E7%BB%8D-Docker-%E5%92%8C-Conda"><span class="nav-number">1.</span> <span class="nav-text">1. 介绍 Docker 和 Conda</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda"><span class="nav-number">1.1.</span> <span class="nav-text">Conda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker"><span class="nav-number">1.2.</span> <span class="nav-text">Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-Docker%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">为什么用 Docker？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%92%8C%E9%95%9C%E5%83%8F"><span class="nav-number">1.3.</span> <span class="nav-text">容器和镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">1.4.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99-Dockerfile-%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.4.1.</span> <span class="nav-text">写 Dockerfile 的注意事项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">2. 常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">镜像操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">容器操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-CentOS8%E5%AE%89%E8%A3%85Docker"><span class="nav-number">3.</span> <span class="nav-text">3. CentOS8安装Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Ubuntu20-04%E5%AE%89%E8%A3%85Docker"><span class="nav-number">4.</span> <span class="nav-text">4. Ubuntu20.04安装Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">自动安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-NVIDIA-Docker"><span class="nav-number">4.2.</span> <span class="nav-text">安装 NVIDIA Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">4.3.</span> <span class="nav-text">手动安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Windows%E5%AE%89%E8%A3%85Docker-Desktop"><span class="nav-number">5.</span> <span class="nav-text">5. Windows安装Docker Desktop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Win10"><span class="nav-number">5.1.</span> <span class="nav-text">Win10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Win11-%E5%AE%B6%E5%BA%AD%E7%89%88"><span class="nav-number">5.2.</span> <span class="nav-text">Win11-家庭版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98"><span class="nav-number">5.2.1.</span> <span class="nav-text">安装问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Desktop-%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6"><span class="nav-number">5.3.</span> <span class="nav-text">Docker Desktop 设置容器资源限制</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E4%BB%8B%E7%BB%8D-Docker-%E5%92%8C-Conda"><span class="nav-number">1.</span> <span class="nav-text">1. 介绍 Docker 和 Conda</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Conda"><span class="nav-number">1.1.</span> <span class="nav-text">Conda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker"><span class="nav-number">1.2.</span> <span class="nav-text">Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-Docker%EF%BC%9F"><span class="nav-number">1.2.1.</span> <span class="nav-text">为什么用 Docker？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%92%8C%E9%95%9C%E5%83%8F"><span class="nav-number">1.3.</span> <span class="nav-text">容器和镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-number">1.4.</span> <span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99-Dockerfile-%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.4.1.</span> <span class="nav-text">写 Dockerfile 的注意事项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">2. 常用指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">镜像操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">容器操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-CentOS8%E5%AE%89%E8%A3%85Docker"><span class="nav-number">3.</span> <span class="nav-text">3. CentOS8安装Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Ubuntu20-04%E5%AE%89%E8%A3%85Docker"><span class="nav-number">4.</span> <span class="nav-text">4. Ubuntu20.04安装Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">4.1.</span> <span class="nav-text">自动安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-NVIDIA-Docker"><span class="nav-number">4.2.</span> <span class="nav-text">安装 NVIDIA Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">4.3.</span> <span class="nav-text">手动安装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Windows%E5%AE%89%E8%A3%85Docker-Desktop"><span class="nav-number">5.</span> <span class="nav-text">5. Windows安装Docker Desktop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Win10"><span class="nav-number">5.1.</span> <span class="nav-text">Win10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Win11-%E5%AE%B6%E5%BA%AD%E7%89%88"><span class="nav-number">5.2.</span> <span class="nav-text">Win11-家庭版</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98"><span class="nav-number">5.2.1.</span> <span class="nav-text">安装问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Desktop-%E8%AE%BE%E7%BD%AE%E5%AE%B9%E5%99%A8%E8%B5%84%E6%BA%90%E9%99%90%E5%88%B6"><span class="nav-number">5.3.</span> <span class="nav-text">Docker Desktop 设置容器资源限制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%88%B6%E4%BD%9CDocker%E9%95%9C%E5%83%8F"><span class="nav-number">6.</span> <span class="nav-text">6. 制作Docker镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-%E6%A0%B9%E6%8D%AE%E5%B7%B2%E6%9C%89%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8docker-commit%E6%9E%84%E5%BB%BA"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 根据已有镜像使用docker commit构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E5%B7%B2%E6%9C%89%E9%95%9C%E5%83%8F"><span class="nav-number">6.1.1.</span> <span class="nav-text">拉取已有镜像</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -698,19 +734,19 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">42k</span>
+    <span title="站点总字数">43k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">38 分钟</span>
+    <span title="站点阅读时长">39 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共19.4k字</span>
+  <span class="post-count">博客全站共19.9k字</span>
 </div>
 
 
